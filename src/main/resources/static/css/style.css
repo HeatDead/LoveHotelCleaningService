@@ -1,0 +1,59 @@
+/* color palette 2E0249 570A57 A91079 F806CC*/
+
+.palette{
+    background-color: #2E0249;
+    background-color: #570A57;
+    background-color: #A91079;
+    background-color: #F806CC;
+}
+
+body{
+    background-color: #2E0249;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    margin: 0;
+}
+
+.pageContent{
+    padding-top: 5rem;
+    height: 4000px;
+}
+
+.bar{
+    position: fixed;
+    height: 4.5rem;
+    width: 100%;
+    background-color: #A91079;
+    color: white;
+    vertical-align: middle;
+}
+
+/* Style the links inside the navigation bar */
+.bar a {
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    transition: 0.8s;
+    color: white;
+    padding: 1rem;
+    height: calc(100% - 2rem);
+}
+
+.bar a:hover {
+    background-color: #570A57;
+    transition: 0.8s;
+    color: white;
+}
+
+.bar a.active {
+    background-color: #7f0e7f;
+    color: white;
+}
+
+.bar a.active:hover {
+    background-color: #570A57;
+    transition: 0.8s;
+    color: white;
+}

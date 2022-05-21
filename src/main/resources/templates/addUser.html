@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>LH Cleaning Service - Home</title>
+    <title>LH Cleaning Service - Registration</title>
     <link rel="icon" th:href="@{https://www.clipartmax.com/png/full/114-1146450_icons-broom-clipart-broom-icon.png}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,11 +10,14 @@
     <link th:href="@{css/style.css}" rel="stylesheet" />
 </head>
 <body>
-<header th:insert="fragments/navbar.html :: header"> </header>
+<header th:insert="fragments/navbar.html :: header"> </header>a
 <div class="pageContent">
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+    Add new user
+    <div th:text="${message}"></div>
+    <form th:action="@{/addUser}" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Add User"/></div>
     </form>
 </div>
 </body>
