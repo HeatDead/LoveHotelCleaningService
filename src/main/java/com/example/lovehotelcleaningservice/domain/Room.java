@@ -1,9 +1,6 @@
 package com.example.lovehotelcleaningservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Room {
@@ -15,6 +12,11 @@ public class Room {
     private String name;
 
     private RoomType type;
+    private Boolean clean_pend;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User responsible;
 
     public Long getId() {
         return id;
@@ -46,5 +48,21 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(User responsible) {
+        this.responsible = responsible;
+    }
+
+    public boolean isClean_pend() {
+        return clean_pend;
+    }
+
+    public void setClean_pend(boolean clean_pend) {
+        this.clean_pend = clean_pend;
     }
 }

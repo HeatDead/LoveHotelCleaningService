@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <title>LH Cleaning Service - Rooms</title>
+    <title>LH Cleaning Service</title>
     <link rel="icon" th:href="@{https://www.clipartmax.com/png/full/114-1146450_icons-broom-clipart-broom-icon.png}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,27 +13,43 @@
 <header th:insert="fragments/navbar.html :: header"> </header>
 
 <div class="pageContent">
-    <div>Rooms List</div>
-
     <div class="roomList">
         <div class="roomPanel" th:each="room : ${rooms}">
-            <div class="roomNumber">
-                <span th:text="${room.number}"></span>
-            </div>
-            <div class="roomImg">
-                <img th:src="'images/rooms/' + ${room.type} + '.jpg'">
-            </div>
+            <img th:if="${room.clean_pend}" class="cleanImg" th:src="@{/images/icon.png}">
+            <div class="hiddenPanel">
+                <div class="roomNumber">
+                    <span th:text="${room.number}"></span>
+                </div>
+                <div class="roomImg">
+                    <img th:src="'images/rooms/' + ${room.type} + '.jpg'">
+                </div>
 
-            <div class="roomText">
-                <span th:text="${room.name}"></span>
-                <span th:text="${room.type}"></span>
-            </div>
+                <div class="roomName" th:text="${room.name}"></div>
+                <div class="roomText">
+                    <span th:text="${room.type}"></span>
+                    <div th:if="${room.responsible}==null">
+                        <strong>NO RESPONSIBLE</strong>
+                    </div>
 
-            <div class="roomButtons">
-                <a>PLACEHOLDER</a>
+                    <div th:unless="${room.responsible}==null">
+                        <strong th:if="${room.responsible.id} == ${user.id}">
+                            YOU RESPONSIBLE
+                        </strong>
+                        <strong th:unless="${room.responsible.id} == ${user.id}" th:text="${room.responsible.name} + ' ' + ${room.responsible.surname}"></strong>
+                    </div>
+                </div>
+
+                <div th:unless="${room.clean_pend}">
+                    <a sec:authorize="hasAuthority('MODERATOR')" th:href="@{cleanPend(id=${room.id})}">NEED TO CLEAN</a>
+                </div>
+
+                <div th:if="${room.clean_pend}" th:unless="${room.responsible}==null">
+                    <a th:if="${room.responsible.id} == ${user.id}" sec:authorize="hasAuthority('CLEANER')" th:href="@{cleaned(id=${room.id})}">CLEANED</a>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 </body>

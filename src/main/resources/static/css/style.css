@@ -34,6 +34,10 @@ body{
     height: 100%;
 }
 
+.bar img.profilePicture{
+    border-radius: 50%;
+}
+
 /* Style the links inside the navigation bar */
 .bar a {
     float: left;
@@ -79,10 +83,9 @@ body{
     background-color: #A91079;
     border-radius: 15px;
     width: 20rem;
-    height: 28rem;
+    height: 24rem;
     text-align: center;
     display: inline-block;
-    overflow: hidden;
     margin: 1.1rem;
     position: relative;
 }
@@ -100,6 +103,18 @@ body{
     font-weight: bold;
 }
 
+.roomName{
+    position: absolute;
+    background-color: #2E0249;
+    padding: 0.3rem;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: bold;
+    width: 80%;
+    top: 11rem;
+    left:calc(10% - 0.3rem);
+}
+
 .roomImg{
     width: 20rem;
     height: 12rem;
@@ -112,7 +127,51 @@ body{
 }
 
 .roomText{
+    margin-top: 1rem;
+    text-align: center;
+}
 
+.roomPanel a{
+    background-color: #A91079;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+    width: 20rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.hiddenPanel{
+    border-radius: 15px;
+    width: 20rem;
+    height: 24rem;
+    overflow: hidden;
+    background-color: #A91079;
+    position: relative;
+}
+
+.roomPanel a:hover{
+    background-color: #570A57;
+    transition: 0.5s;
+}
+
+
+img.cleanImg{
+    overflow: visible;
+    width: 2.5rem;
+    position:absolute;
+    top: -2rem;
+    left: -2rem;
+    z-index: 5;
+    background-color: #2E0249;
+    border-radius: 50%;
+    padding: 0.8rem;
 }
 
 .roomButtons{
@@ -180,4 +239,26 @@ li {
 li a:hover {
     background-color: #570A57;
     transition: 0.5s;
+}
+
+.profilePanelCont{
+    padding: 1.4rem;
+    color: black;
+    font-size: 18px;
+    display: inline-flex;
+}
+
+.profileInfo{
+    margin-left: 2rem;
+    width: fit-content;
+}
+
+.profileTitle{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profilePanelCont img.profilePicture{
+    width: 10rem;
+    border-radius: 50%;
 }

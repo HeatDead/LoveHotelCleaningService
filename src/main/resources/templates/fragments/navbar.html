@@ -12,9 +12,15 @@
     <span>LH Cleaning Service</span>
   </a>
 
-  <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/adminPanel}">Control Panel</a>
+  <a sec:authorize="hasAuthority('ADMIN') OR hasAuthority('MODERATOR')" th:href="@{/adminPanel}">Control Panel</a>
 
   <a sec:authorize="isAuthenticated()" class="right"  href="javascript: document.logoutForm.submit()" role="menuitem">Log Out</a>
+
+  <a sec:authorize="isAuthenticated()" class="right"  th:href="@{/userProfile}">
+    <img class="profilePicture" th:src="@{/images/profile/avatar_m.jpg}">
+    <span sec:authentication="principal.name"></span>
+  </a>
+
   <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
   </form>

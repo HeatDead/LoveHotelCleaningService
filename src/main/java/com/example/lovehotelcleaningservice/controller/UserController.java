@@ -23,14 +23,14 @@ public class UserController {
     @GetMapping("/users")
     public String userList(Model model) {
         model.addAttribute("users", userRepo.findAll());
-        return "userList";
+        return "control_panel/userList";
     }
 
     @GetMapping("/userEdit")
     public String userEditForm(@RequestParam("id") String userId, Model model) {
         model.addAttribute("user", userRepo.findById(Long.parseLong(userId)).get());
         model.addAttribute("roles", Role.values());
-        return "userEdit";
+        return "control_panel/userEdit";
     }
 
     @PostMapping("/userSave")
@@ -66,7 +66,7 @@ public class UserController {
                 model.addAttribute("message", "The login is already taken!");
                 model.addAttribute("user", user);
                 model.addAttribute("roles", Role.values());
-                return "userEdit";
+                return "control_panel/userEdit";
             }
         }
 
@@ -75,7 +75,7 @@ public class UserController {
             model.addAttribute("message", "Passwords don't match!");
             model.addAttribute("user", user);
             model.addAttribute("roles", Role.values());
-            return "userEdit";
+            return "control_panel/userEdit";
         }else user.setPassword(password);
 
         userRepo.save(user);
@@ -87,7 +87,7 @@ public class UserController {
     public String addUser(Model model)
     {
         model.addAttribute("roles", Role.values());
-        return "addUser";
+        return "control_panel/addUser";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -101,7 +101,7 @@ public class UserController {
         if(userFromDb != null)
         {
             model.addAttribute("message", "User exists!");
-            return "addUser";
+            return "control_panel/addUser";
         }
 
         if(user.getPassword().compareTo(p_confirm) != 0)
@@ -109,7 +109,7 @@ public class UserController {
             model.addAttribute("message", "Passwords don't match!");
             //model.addAttribute("user", user);
             //model.addAttribute("roles", Role.values());
-            return "addUser";
+            return "control_panel/addUser";
         }
 
         Set<String> roles = Arrays.stream(Role.values())
