@@ -16,16 +16,22 @@ body{
 
 .pageContent{
     padding-top: 5rem;
-    height: 4000px;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 .bar{
     position: fixed;
     height: 4.5rem;
     width: 100%;
+    z-index: 10;
     background-color: #A91079;
     color: white;
     vertical-align: middle;
+}
+
+.bar img{
+    height: 100%;
 }
 
 /* Style the links inside the navigation bar */
@@ -39,11 +45,18 @@ body{
     color: white;
     padding: 1rem;
     height: calc(100% - 2rem);
+    display: flex;
+    align-items:center;
+    gap: 20px;
+}
+
+.bar a.right {
+    float: right;
 }
 
 .bar a:hover {
     background-color: #570A57;
-    transition: 0.8s;
+    transition: 0.5s;
     color: white;
 }
 
@@ -56,4 +69,115 @@ body{
     background-color: #570A57;
     transition: 0.8s;
     color: white;
+}
+
+.roomList{
+    text-align: center;
+}
+
+.roomPanel{
+    background-color: #A91079;
+    border-radius: 15px;
+    width: 20rem;
+    height: 28rem;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+    margin: 1.1rem;
+    position: relative;
+}
+
+.roomNumber{
+    position: absolute;
+    background-color: #2E0249;
+    left:calc(50% - 1rem);
+    top: 0.5rem;
+    width: 3rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.roomImg{
+    width: 20rem;
+    height: 12rem;
+    overflow: hidden;
+}
+
+.roomPanel img{
+    width: 20rem;
+    float: top;
+}
+
+.roomText{
+
+}
+
+.roomButtons{
+    background-color: #7f0e7f;
+    height: 5rem;
+    width: 20rem;
+    position: absolute;
+    bottom: 0;
+}
+
+.adminPanel{
+    background: white;
+    width: 80%;
+    min-height: 50rem;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 2rem;
+    overflow: hidden;
+    display: flex;
+}
+
+.adminNav{
+    background-color: #A91079;
+    width: 15rem;
+    min-height: 50rem;
+}
+
+.adminTitle{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.adminPanelCont{
+    padding: 1.4rem;
+    color: black;
+    font-size: 18px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    border: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+    align-items: center;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    transition: 0.8s;
+}
+
+li {
+    text-align: center;
+    border-bottom: none;
+    list-style-type: none;
+}
+
+li a:hover {
+    background-color: #570A57;
+    transition: 0.5s;
 }

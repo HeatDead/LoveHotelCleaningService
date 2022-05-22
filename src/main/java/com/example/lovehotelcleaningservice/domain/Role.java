@@ -1,7 +1,14 @@
 package com.example.lovehotelcleaningservice.domain;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ADMIN,
     MODERATOR,
-    CLEANER
+    CLEANER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:fragment="headerfiles">
   <meta charset="UTF-8" />
   <link th:href="@{/css/styles.css}" rel="stylesheet">
@@ -7,8 +7,18 @@
 <body>
 
 <div class="bar" th:fragment="header">
-  <a th:href="@{/}">LH Cleaning Service</a>
-  <a th:href="@{/addUser}">Add User</a>
+  <a th:href="@{/}">
+    <img th:src="@{/images/icon.png}">
+    <span>LH Cleaning Service</span>
+  </a>
+
+  <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/adminPanel}">Control Panel</a>
+
+  <a sec:authorize="isAuthenticated()" class="right"  href="javascript: document.logoutForm.submit()" role="menuitem">Log Out</a>
+  <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+  </form>
+
 </div>
 
 </body>

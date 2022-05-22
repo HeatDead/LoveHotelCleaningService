@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>LH Cleaning Service - Add User</title>
+    <title>LH Cleaning Service - Add Room</title>
     <link rel="icon" th:href="@{https://www.clipartmax.com/png/full/114-1146450_icons-broom-clipart-broom-icon.png}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,19 +15,12 @@
     <div class="adminPanel">
         <div th:insert="fragments/adminnav.html"> </div>
         <div class="adminPanelCont">
-            <div class="adminTitle">Add new user</div>
+            <div class="adminTitle">Add new room</div>
             <div th:text="${message}"></div>
-            <form th:action="@{/addUser}" method="post">
-                <div><label> Login: <input type="text" name="username"/> </label></div>
-                <div><label> Password: <input type="password" name="password"/> </label></div>
-                <div><label> Confirm password: <input type="password" name="p_confirm"/> </label></div>
+            <form th:action="@{/addRoom}" method="post">
+                <div><label> Number: <input type="number" min="1" name="number"/> </label></div>
                 <div><label> Name: <input type="text" name="name"/> </label></div>
-                <div><label> Surname: <input type="text" name="surname"/> </label></div>
-                <div th:each="role : ${roles}">
-                    <label th:for="${role}" th:text="${role}"></label>
-                    <input th:type="checkbox" th:name="rl" th:id="${role}" th:value="${role}">
-                </div>
-                <div><input type="submit" value="Add User"/></div>
+                <div><input type="submit" value="Add Room"/></div>
             </form>
         </div>
     </div>
