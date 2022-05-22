@@ -17,15 +17,17 @@
         <div th:insert="fragments/controlnav.html"> </div>
         <div class="adminPanelCont">
             <div class="adminTitle">Rooms List</div>
-            <div th:each="room : ${rooms}">
-                <strong th:text="${room.id}"></strong>
-                <strong th:text="${room.number}"></strong>
-                <strong th:text="${room.name}"></strong>
-                <strong th:if="${room.responsible}==null">NULL</strong>
-                <strong th:unless="${room.responsible}==null" th:text="${room.responsible.name} + ' ' + ${room.responsible.surname}"></strong>
-                <strong th:text="${room.clean_pend}"></strong>
-                <a th:href="@{/rooms}">Edit</a>
-            </div>
+            <table>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.id}"></td>
+                    <td th:text="${room.number}"></td>
+                    <td th:text="${room.name}"></td>
+                    <td th:if="${room.responsible}==null">NULL</td>
+                    <td th:unless="${room.responsible}==null" th:text="${room.responsible.name} + ' ' + ${room.responsible.surname}"></td>
+                    <td th:text="${room.clean_pend}"></td>
+                    <td><a th:href="@{roomEdit(id=${room.id})}">Edit</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

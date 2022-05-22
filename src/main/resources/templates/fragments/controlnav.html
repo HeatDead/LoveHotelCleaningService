@@ -9,9 +9,9 @@
 <div class="adminNav">
     <li><a th:href="@{/adminPanel}">Main</a></li>
     <li><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">Users</a></li>
-    <li><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/rooms}">Rooms</a></li>
+    <li><a sec:authorize="hasAuthority('ADMIN') OR hasAuthority('MODERATOR')" th:href="@{/rooms}">Rooms</a></li>
     <li><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/addUser}">Add User</a></li>
-    <li><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/addRoom}">Add Room</a></li>
+    <li><a sec:authorize="hasAuthority('ADMIN') OR hasAuthority('MODERATOR')" th:href="@{/addRoom}">Add Room</a></li>
 </div>
 
 </body>

@@ -14,7 +14,7 @@ public class ProfileController {
     private UserRepo userRepo;
 
     @GetMapping("/userProfile")
-    public String navbar(Model model)
+    public String userProfile(Model model)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user", userRepo.findByUsername(auth.getName()));

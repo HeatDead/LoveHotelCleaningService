@@ -28,6 +28,7 @@ body{
     background-color: #A91079;
     color: white;
     vertical-align: middle;
+    box-shadow: 0 0 10px black;
 }
 
 .bar img{
@@ -261,4 +262,72 @@ li a:hover {
 .profilePanelCont img.profilePicture{
     width: 10rem;
     border-radius: 50%;
+}
+
+.logForm{
+    color: black;
+    font-size: 18px;
+    background-color: white;
+    width: 20rem;
+    height: 24rem;
+    text-align: center;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.logContent{
+    padding-top: 12rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    text-align: center;
+}
+
+.loginTitle{
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+}
+
+.logItem{
+    margin-bottom: 0.4rem;
+}
+
+button {
+    background-color: #A91079;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: 0.5s;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.logContent button{
+    margin-top: 1rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 24px 32px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0;
+}
+
+button:hover{
+    background-color: #570A57;
+    transition: 0.5s;
+}
+
+input{
+    border-radius: 15px;
+    padding: 0.2rem 0.5rem;
 }

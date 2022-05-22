@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class RoomController {
@@ -34,7 +37,7 @@ public class RoomController {
         return "roomsList";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('MODERATOR')")
     @GetMapping("/rooms")
     public String adminRoomList(Model model) {
         List<Room> rooms = roomsSort(roomRepo.findAll());
@@ -42,8 +45,7 @@ public class RoomController {
         return "control_panel/roomsList";
     }
 
-    public static List<Room> roomsSort(List<Room> rooms)
-    {
+    public static List<Room> roomsSort(List<Room> rooms) {
         int c = 1;
         while (c > 0)
         {
@@ -62,16 +64,15 @@ public class RoomController {
         return rooms;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('MODERATOR')")
     @GetMapping("/addRoom")
-    public String addRoom(Model model)
-    {
+    public String addRoom(Model model) {
         model.addAttribute("types", RoomType.values());
         model.addAttribute("users", userRepo.findAllByRoles(Role.CLEANER));
         return "control_panel/addRoom";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('MODERATOR')")
     @PostMapping("/addRoom")
     public String addRoom(Room room,
                           @RequestParam String ty,
@@ -97,6 +98,47 @@ public class RoomController {
         room.setType(RoomType.valueOf(ty));
         roomRepo.save(room);
         return "redirect:/";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')  OR hasAuthority('MODERATOR')")
+    @GetMapping("/roomEdit")
+    public String roomEditForm(@RequestParam("id") String userId, Model model) {
+        model.addAttribute("room", roomRepo.findById(Long.valueOf(userId)).get());
+        model.addAttribute("types", RoomType.values());
+        model.addAttribute("users", userRepo.findAllByRoles(Role.CLEANER));
+        return "control_panel/roomEdit";
+    }
+
+    @PostMapping("/roomSave")
+    public String roomSave(
+            Room room,
+            @RequestParam String roomId,
+            @RequestParam String ty,
+            @RequestParam String rs,
+            Model model)
+    {
+        room.setId(Long.valueOf(roomId));
+        Room roomFromDb = roomRepo.findByNumber(room.getNumber());
+        if(roomFromDb != null)
+        {
+            if(roomFromDb.getId() != room.getId()) {
+                model.addAttribute("message", "Room already exists!");
+                model.addAttribute("types", RoomType.values());
+                return "control_panel/roomEdit";
+            }
+        }
+        if(room.getName().isEmpty())
+        {
+            model.addAttribute("message", "Enter a name!");
+            model.addAttribute("types", RoomType.values());
+            return "control_panel/roomEdit";
+        }
+        room.setClean_pend(false);
+        if(!rs.isEmpty())
+            room.setResponsible(userRepo.findUserById(Long.parseLong(rs)));
+        room.setType(RoomType.valueOf(ty));
+        roomRepo.save(room);
+        return "redirect:/rooms";
     }
 
     @PreAuthorize("hasAuthority('MODERATOR')")

@@ -13,18 +13,29 @@
 
 <div th:insert="fragments/navbar.html :: header"> </div>
 
-<div class="pageContent">
-    <div th:if="${param.error}">
-        Invalid username and password.
+<div class="logContent">
+    <div class="logForm">
+        <div class="loginTitle">Sign in</div>
+        <div class="logItem" th:if="${param.error}">
+            Invalid username or password
+        </div>
+        <div class="logItem" th:if="${param.logout}">
+            You have been logged out
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label class="logItem"> Login </label>
+                <br>
+                <input class="logItem" type="text" name="username"/>
+            </div>
+            <div>
+                <label class="logItem"> Password </label>
+                <br>
+                <input class="logItem" type="password" name="password"/>
+            </div>
+            <button type="submit"/>ENTER</button>
+        </form>
     </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <form th:action="@{/login}" method="post">
-        <div><label> Login: <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
 </div>
 </body>
 </html>

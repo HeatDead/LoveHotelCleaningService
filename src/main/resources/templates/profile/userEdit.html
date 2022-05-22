@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>LH Cleaning Service - Users</title>
+    <title>LH Cleaning Service - Edit Profile</title>
     <link rel="icon" th:href="@{https://www.clipartmax.com/png/full/114-1146450_icons-broom-clipart-broom-icon.png}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,16 +14,15 @@
 
 <div class="pageContent">
     <div class="adminPanel">
-        <div th:insert="fragments/controlnav.html"> </div>
-        <div class="adminPanelCont">
-            <div class="adminTitle">Users List</div>
-            <table>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.username}"></td>
-                    <td th:text="${user.roles}"></td>
-                    <td><a th:href="@{userEdit(id=${user.id})}">Edit</a></td>
-                </tr>
-            </table>
+        <div th:insert="fragments/profilenav.html"> </div>
+        <div class="profilePanelCont">
+            <div>
+                <img class="profilePicture" th:src="@{/images/profile/avatar_m.jpg}">
+            </div>
+            <div class="profileInfo">
+                <div class="profileTitle" th:text="${user.name} + ' ' + ${user.surname}"></div>
+                <span th:text="${user.username}"></span>
+            </div>
         </div>
     </div>
 </div>
