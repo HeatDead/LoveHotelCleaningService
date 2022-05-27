@@ -21,7 +21,7 @@
 
             <form th:action="@{/roomSave}" method="post">
                 <div><label> Number: <input type="number" min="1" name="number" th:value="${room.number}"/> </label></div>
-                <div><label> Name: <input type="text" name="name" th:value="${room.name}"/> </label></div>
+                <div><label> Name: <input type="text" name="name" maxlength="24" th:value="${room.name}"/> </label></div>
 
                 <span>Type: </span>
                 <select name="ty">

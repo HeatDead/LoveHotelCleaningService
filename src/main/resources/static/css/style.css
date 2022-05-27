@@ -186,18 +186,22 @@ img.cleanImg{
 .adminPanel{
     background: white;
     width: 80%;
-    min-height: 50rem;
+    height: 50rem;
     border-radius: 15px;
     margin: auto;
     margin-top: 2rem;
-    overflow: hidden;
     display: flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .adminNav{
+    position: fixed;
     background-color: #A91079;
     width: 15rem;
-    min-height: 50rem;
+    height: 50rem;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 .adminTitle{
@@ -206,9 +210,12 @@ img.cleanImg{
 }
 
 .adminPanelCont{
-    padding: 1.4rem;
     color: black;
     font-size: 18px;
+    height: fit-content;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 1.4rem 1.4rem 1.4rem 16.4rem;
 }
 
 ul {
@@ -243,10 +250,10 @@ li a:hover {
 }
 
 .profilePanelCont{
-    padding: 1.4rem;
     color: black;
     font-size: 18px;
     display: inline-flex;
+    padding: 1.4rem 1.4rem 1.4rem 16.4rem;
 }
 
 .profileInfo{
@@ -331,3 +338,57 @@ input{
     border-radius: 15px;
     padding: 0.2rem 0.5rem;
 }
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px cornflowerblue inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: white;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px cornflowerblue inset;
+    -webkit-text-fill-color: white;
+}
+
+table{
+    color: white;
+    text-align: center;
+}
+
+.adminTable{
+
+}
+
+th {
+    background-color: #A91079;
+    min-width: 4rem;
+    height: 3rem;
+    padding: 0 1rem;
+}
+
+td {
+    background-color: #A91079;
+    min-width: 4rem;
+    overflow: hidden;
+    height: 3rem;
+}
+
+td a{
+    color: white;
+    text-decoration: none;
+    background-color: #A91079;
+    width: 100%;
+    min-width: 8rem;
+    padding: 0.8rem 2rem;
+    transition: 0.5s;
+}
+
+td a:hover{
+    background-color: #7f0e7f;
+    transition: 0.5s;
+}
+
+tr:first-child td:first-child { border-top-left-radius: 15px; }
+tr:first-child td:last-child { border-top-right-radius: 15px; }
+tr:last-child td:first-child { border-bottom-left-radius: 15px; }
+tr:last-child td:last-child { border-bottom-right-radius: 15px; }
+th:first-child { border-top-left-radius: 15px; }
+th:last-child { border-top-right-radius: 15px; }

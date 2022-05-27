@@ -21,6 +21,8 @@ public class User implements UserDetails {
 
     private boolean active;
 
+    private Rank rank;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -105,5 +107,13 @@ public class User implements UserDetails {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
     }
 }

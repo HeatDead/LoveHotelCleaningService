@@ -22,6 +22,7 @@
             <div class="profileInfo">
                 <div class="profileTitle" th:text="${user.name} + ' ' + ${user.surname}"></div>
                 <span th:text="${user.username}"></span>
+                <div>Rank: <span sec:authorize="hasAuthority('CLEANER')" th:text="${user.rank}"></span></div>
             </div>
         </div>
     </div>

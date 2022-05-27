@@ -22,9 +22,9 @@
             <form th:action="@{/userSave}" method="post" name="userId">
                 <span>Login: </span><input th:type="text" name="username" th:value="${user.username}">
                 <br>
-                <span>Password: </span><input th:type="password" name="password" th:value="${user.password}">
+                <span>Password: </span><input th:type="password" name="password">
                 <br>
-                <span>Confirm password: </span><input th:type="password" name="p_confirm" th:value="${user.password}">
+                <span>Confirm password: </span><input th:type="password" name="p_confirm">
                 <br>
                 <span>Name: </span><input th:type="text" name="name" th:value="${user.name}">
                 <br>

@@ -1,6 +1,7 @@
 package com.example.lovehotelcleaningservice.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Room {
@@ -13,6 +14,8 @@ public class Room {
 
     private RoomType type;
     private Boolean clean_pend;
+
+    private LocalDateTime pend_date;
 
     @OneToOne
     @JoinColumn(name = "user_id")

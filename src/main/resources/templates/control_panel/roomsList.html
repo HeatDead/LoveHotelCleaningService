@@ -18,14 +18,15 @@
         <div class="adminPanelCont">
             <div class="adminTitle">Rooms List</div>
             <table>
+                <th>Number</th><th>Name</th><th>Type</th><th>Responsible</th><th>Pending</th><th></th>
                 <tr th:each="room : ${rooms}">
-                    <td th:text="${room.id}"></td>
                     <td th:text="${room.number}"></td>
                     <td th:text="${room.name}"></td>
+                    <td th:text="${room.type}"></td>
                     <td th:if="${room.responsible}==null">NULL</td>
                     <td th:unless="${room.responsible}==null" th:text="${room.responsible.name} + ' ' + ${room.responsible.surname}"></td>
                     <td th:text="${room.clean_pend}"></td>
-                    <td><a th:href="@{roomEdit(id=${room.id})}">Edit</a></td>
+                    <td><a th:href="@{roomEdit(id=${room.id})}">EDIT</a></td>
                 </tr>
             </table>
         </div>

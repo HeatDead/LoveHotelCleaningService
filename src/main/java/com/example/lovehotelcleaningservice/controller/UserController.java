@@ -1,10 +1,12 @@
 package com.example.lovehotelcleaningservice.controller;
 
+import com.example.lovehotelcleaningservice.domain.Rank;
 import com.example.lovehotelcleaningservice.domain.Role;
 import com.example.lovehotelcleaningservice.domain.User;
 import com.example.lovehotelcleaningservice.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +22,28 @@ public class UserController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/users")
     public String userList(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", getUsers());
         return "control_panel/userList";
+    }
+
+    private List<User> getUsers()
+    {
+        List<User> users = userRepo.findAll();
+        for (User user : users)
+            checkUser(user);
+        users = userRepo.findAll();
+        return users;
+    }
+
+    private void checkUser(User user){
+        if(user.getRank() == null)
+            user.setRank(Rank.BEGINNER);
+        userRepo.save(user);
     }
 
     @GetMapping("/userEdit")
@@ -81,13 +101,13 @@ public class UserController {
             model.addAttribute("user", user);
             model.addAttribute("roles", Role.values());
             return "control_panel/userEdit";
-        }else user.setPassword(password);
+        }else user.setPassword(passwordEncoder.encode(password));
 
         userRepo.save(user);
         return "redirect:/users";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/addUser")
     public String addUser(Model model)
     {
@@ -95,7 +115,7 @@ public class UserController {
         return "control_panel/addUser";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/addUser")
     public String addUser(@RequestParam String p_confirm,
                           User user,
@@ -112,10 +132,10 @@ public class UserController {
         if(user.getPassword().compareTo(p_confirm) != 0)
         {
             model.addAttribute("message", "Passwords don't match!");
-            //model.addAttribute("user", user);
-            //model.addAttribute("roles", Role.values());
             return "control_panel/addUser";
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
