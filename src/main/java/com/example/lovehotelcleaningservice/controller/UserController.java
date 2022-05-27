@@ -47,17 +47,22 @@ public class UserController {
         user.setUsername(username);
         user.setName(name);
         user.setSurname(surname);
+
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
                 .collect(Collectors.toSet());
 
-        user.getRoles().clear();
+        Set<Role> rls = new HashSet<>();
 
-        for (String role : form) {
-            if(roles.contains(role)){
-                user.getRoles().add(Role.valueOf(role));
+        if(form != null && form.length > 0) {
+            for (String role : form) {
+                if (roles.contains(role)) {
+                    rls.add(Role.valueOf(role));
+                }
             }
-        }
+        } else rls.add(Role.CLEANER);
+
+        user.setRoles(rls);
 
         User userFromDb = userRepo.findByUsername(username);
         if(userFromDb != null)
@@ -118,18 +123,19 @@ public class UserController {
 
         Set<Role> rls = new HashSet<>();
 
-        for (String role : form) {
-            if(roles.contains(role)){
-                rls.add(Role.valueOf(role));
+        if(form != null && form.length > 0) {
+            for (String role : form) {
+                if (roles.contains(role)) {
+                    rls.add(Role.valueOf(role));
+                }
             }
-        }
+        } else rls.add(Role.CLEANER);
 
-        //user.setRoles(Collections.singleton(Role.CLEANER));
         user.setRoles(rls);
 
         user.setActive(true);
 
         userRepo.save(user);
-        return "redirect:/";
+        return "redirect:/users";
     }
 }

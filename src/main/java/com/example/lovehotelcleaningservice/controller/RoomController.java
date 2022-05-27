@@ -109,6 +109,7 @@ public class RoomController {
         return "control_panel/roomEdit";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')  OR hasAuthority('MODERATOR')")
     @PostMapping("/roomSave")
     public String roomSave(
             Room room,
