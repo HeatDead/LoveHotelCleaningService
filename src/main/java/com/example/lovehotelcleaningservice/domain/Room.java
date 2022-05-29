@@ -17,10 +17,6 @@ public class Room {
 
     private LocalDateTime pend_date;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User responsible;
-
     public Long getId() {
         return id;
     }
@@ -53,19 +49,27 @@ public class Room {
         this.name = name;
     }
 
-    public User getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(User responsible) {
-        this.responsible = responsible;
-    }
-
     public boolean isClean_pend() {
         return clean_pend;
     }
 
     public void setClean_pend(boolean clean_pend) {
         this.clean_pend = clean_pend;
+    }
+
+    public Boolean getClean_pend() {
+        return clean_pend;
+    }
+
+    public void setClean_pend(Boolean clean_pend) {
+        this.clean_pend = clean_pend;
+    }
+
+    public LocalDateTime getPend_date() {
+        return pend_date;
+    }
+
+    public void setPend_date(LocalDateTime pend_date) {
+        this.pend_date = pend_date;
     }
 }

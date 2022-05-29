@@ -14,15 +14,22 @@
 
 <div class="pageContent">
     <div class="adminPanel">
-        <div th:insert="fragments/profilenav.html"> </div>
-        <div class="profilePanelCont">
-            <div>
-                <img class="profilePicture" th:src="@{/images/profile/avatar_m.jpg}">
-            </div>
-            <div class="profileInfo">
-                <div class="profileTitle" th:text="${user.name} + ' ' + ${user.surname}"></div>
-                <span th:text="${user.username}"></span>
-            </div>
+        <div th:insert="fragments/controlnav.html"> </div>
+        <div class="adminPanelCont">
+            <div class="adminTitle">User Editor</div>
+            <div th:text="${message}"></div>
+            <form th:action="@{/profileSave}" method="post" name="userId">
+                <span>Password: </span><input th:type="password" name="password">
+                <br>
+                <span>Confirm password: </span><input th:type="password" name="p_confirm">
+                <br>
+                <span>Name: </span><input th:type="text" name="name" th:value="${user.name}">
+                <br>
+                <span>Surname: </span><input th:type="text" name="surname" th:value="${user.surname}">
+
+                <input th:type="hidden" name="userId" th:value="${user.id}">
+                <div><button type="submit"/>SAVE</button></div>
+            </form>
         </div>
     </div>
 </div>

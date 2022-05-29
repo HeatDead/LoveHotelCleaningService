@@ -2,7 +2,7 @@ package com.example.lovehotelcleaningservice.domain;
 
 public enum Rank {
     BEGINNER,
-    INTERMIDIATE,
+    INTERMEDIATE,
     MASTER,
     PRO,
     GURU,

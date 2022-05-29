@@ -31,13 +31,6 @@
                 </select>
 
                 <br>
-                <span>Responsible: </span>
-                <select name="rs">
-                    <option  th:name="rs" th:id="rs" th:value="null"><label>NULL</label></option>
-                    <div th:each="user : ${users}">
-                        <option  th:name="rs" th:id="rs" th:value="${user.id}"><label th:text="${user.name} + ' ' + ${user.surname}"></label></option>
-                    </div>
-                </select>
 
                 <div><div><button type="submit"/>ADD ROOM</button></div></div>
             </form>

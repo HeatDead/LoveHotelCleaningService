@@ -16,13 +16,30 @@
     <div class="adminPanel">
         <div th:insert="fragments/profilenav.html"> </div>
         <div class="profilePanelCont">
-            <div>
-                <img class="profilePicture" th:src="@{/images/profile/avatar_m.jpg}">
+            <div class="profileInfoCont">
+                <div class="profilePictureBlock">
+                    <img class="profilePicture" th:src="@{/images/profile/avatar_m.jpg}">
+                    <img sec:authorize="hasAuthority('CLEANER')" class="rankImg" th:src="'images/profile/ranks/' + ${user.rank} + '.png'">
+                </div>
+                <div class="profileInfo">
+                    <div class="profileTitle" th:text="${user.name} + ' ' + ${user.surname}"></div>
+                    <span th:text="${user.username}"></span>
+                    <div sec:authorize="hasAuthority('CLEANER')">Clean ups: <span th:text="${cleanups.size()}"></span></div>
+                    <div sec:authorize="hasAuthority('CLEANER')">Rank: <span th:text="${user.rank}"></span></div>
+                </div>
             </div>
-            <div class="profileInfo">
-                <div class="profileTitle" th:text="${user.name} + ' ' + ${user.surname}"></div>
-                <span th:text="${user.username}"></span>
-                <div>Rank: <span sec:authorize="hasAuthority('CLEANER')" th:text="${user.rank}"></span></div>
+            <div sec:authorize="hasAuthority('CLEANER')">
+                <table>
+                    <tr>
+                        <th>Room Number</th><th>Room Name</th><th>Clean Pending Date</th><th>Cleaned Date</th>
+                    </tr>
+                    <tr th:each="cleanup : ${cleanups}">
+                        <td th:text="${cleanup.room_number}"></td>
+                        <td th:text="${cleanup.room_name}"></td>
+                        <td th:text="${cleanup.pend_date}"></td>
+                        <td th:text="${cleanup.cleanup_date}"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

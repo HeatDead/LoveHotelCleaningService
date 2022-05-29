@@ -1,9 +1,7 @@
 package com.example.lovehotelcleaningservice.controller;
 
-import com.example.lovehotelcleaningservice.domain.Role;
-import com.example.lovehotelcleaningservice.domain.Room;
-import com.example.lovehotelcleaningservice.domain.RoomType;
-import com.example.lovehotelcleaningservice.domain.User;
+import com.example.lovehotelcleaningservice.domain.*;
+import com.example.lovehotelcleaningservice.repos.CleanupRepo;
 import com.example.lovehotelcleaningservice.repos.RoomRepo;
 import com.example.lovehotelcleaningservice.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 public class RoomController {
@@ -27,6 +23,8 @@ public class RoomController {
     private RoomRepo roomRepo;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private CleanupRepo cleanupRepo;
 
     @GetMapping("/")
     public String roomList(Model model) {
@@ -68,7 +66,6 @@ public class RoomController {
     @GetMapping("/addRoom")
     public String addRoom(Model model) {
         model.addAttribute("types", RoomType.values());
-        model.addAttribute("users", userRepo.findAllByRoles(Role.CLEANER));
         return "control_panel/addRoom";
     }
 
@@ -76,7 +73,6 @@ public class RoomController {
     @PostMapping("/addRoom")
     public String addRoom(Room room,
                           @RequestParam String ty,
-                          @RequestParam String rs,
                           Model model)
     {
         Room roomFromDb = roomRepo.findByNumber(room.getNumber());
@@ -93,8 +89,6 @@ public class RoomController {
             return "control_panel/addRoom";
         }
         room.setClean_pend(false);
-        if(!rs.isEmpty())
-            room.setResponsible(userRepo.findUserById(Long.parseLong(rs)));
         room.setType(RoomType.valueOf(ty));
         roomRepo.save(room);
         return "redirect:/";
@@ -105,7 +99,6 @@ public class RoomController {
     public String roomEditForm(@RequestParam("id") String userId, Model model) {
         model.addAttribute("room", roomRepo.findById(Long.valueOf(userId)).get());
         model.addAttribute("types", RoomType.values());
-        model.addAttribute("users", userRepo.findAllByRoles(Role.CLEANER));
         return "control_panel/roomEdit";
     }
 
@@ -115,7 +108,6 @@ public class RoomController {
             Room room,
             @RequestParam String roomId,
             @RequestParam String ty,
-            @RequestParam String rs,
             Model model)
     {
         room.setId(Long.valueOf(roomId));
@@ -135,8 +127,6 @@ public class RoomController {
             return "control_panel/roomEdit";
         }
         room.setClean_pend(false);
-        if(!rs.isEmpty())
-            room.setResponsible(userRepo.findUserById(Long.parseLong(rs)));
         room.setType(RoomType.valueOf(ty));
         roomRepo.save(room);
         return "redirect:/rooms";
@@ -146,6 +136,7 @@ public class RoomController {
     @GetMapping("/cleanPend")
     public String cleanPend(@RequestParam("id") String roomId) {
         Room room = roomRepo.findById(Long.valueOf(roomId)).get();
+        room.setPend_date(LocalDateTime.now());
         room.setClean_pend(true);
         roomRepo.save(room);
         return "redirect:/";
@@ -155,8 +146,29 @@ public class RoomController {
     @GetMapping("/cleaned")
     public String cleaned(@RequestParam("id") String roomId) {
         Room room = roomRepo.findById(Long.valueOf(roomId)).get();
+
+        if(!room.isClean_pend())
+        {
+            return "redirect:/cleaningError";
+        }
+
+        Cleanup cleanup = new Cleanup();
+        cleanup.setPend_date(room.getPend_date());
+        cleanup.setClean_date(LocalDateTime.now());
+        cleanup.setRoom_id(room.getId());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        cleanup.setUser_id(userRepo.findByUsername(auth.getName()).getId());
+
+        room.setPend_date(null);
         room.setClean_pend(false);
         roomRepo.save(room);
+        cleanupRepo.save(cleanup);
         return "redirect:/";
+    }
+
+    @PreAuthorize("hasAuthority('CLEANER')")
+    @GetMapping("/cleaningError")
+    public String cleanError() {
+        return "cleaningError";
     }
 }

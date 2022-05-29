@@ -27,24 +27,14 @@
                 <div class="roomName" th:text="${room.name}"></div>
                 <div class="roomText">
                     <span th:text="${room.type}"></span>
-                    <div th:if="${room.responsible}==null">
-                        <strong>NO RESPONSIBLE</strong>
-                    </div>
-
-                    <div th:unless="${room.responsible}==null">
-                        <strong th:if="${room.responsible.id} == ${user.id}">
-                            YOU RESPONSIBLE
-                        </strong>
-                        <strong th:unless="${room.responsible.id} == ${user.id}" th:text="${room.responsible.name} + ' ' + ${room.responsible.surname}"></strong>
-                    </div>
                 </div>
 
                 <div th:unless="${room.clean_pend}">
                     <a sec:authorize="hasAuthority('MODERATOR')" th:href="@{cleanPend(id=${room.id})}">NEED TO CLEAN</a>
                 </div>
 
-                <div th:if="${room.clean_pend}" th:unless="${room.responsible}==null">
-                    <a th:if="${room.responsible.id} == ${user.id}" sec:authorize="hasAuthority('CLEANER')" th:href="@{cleaned(id=${room.id})}">CLEANED</a>
+                <div th:if="${room.clean_pend}">
+                    <a sec:authorize="hasAuthority('CLEANER')" th:href="@{cleaned(id=${room.id})}">CLEANED</a>
                 </div>
             </div>
         </div>
