@@ -21,6 +21,10 @@ public class Room {
         return id;
     }
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    public User cleaner;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -71,5 +75,13 @@ public class Room {
 
     public void setPend_date(LocalDateTime pend_date) {
         this.pend_date = pend_date;
+    }
+
+    public User getCleaner() {
+        return cleaner;
+    }
+
+    public void setCleaner(User cleaner) {
+        this.cleaner = cleaner;
     }
 }

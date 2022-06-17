@@ -30,6 +30,7 @@ public class RoomController {
     public String roomList(Model model) {
         List<Room> rooms = roomsSort(roomRepo.findAll());
         model.addAttribute("rooms", rooms);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user", userRepo.findByUsername(auth.getName()));
         return "roomsList";
@@ -143,11 +144,29 @@ public class RoomController {
     }
 
     @PreAuthorize("hasAuthority('CLEANER')")
+    @GetMapping("/reserve")
+    public String reserve(@RequestParam("id") String roomId){
+        Room room = roomRepo.findById(Long.valueOf(roomId)).get();
+
+        if(!room.isClean_pend() || room.cleaner != null)
+        {
+            return "redirect:/cleaningError";
+        }
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        room.setCleaner(userRepo.findByUsername(auth.getName()));
+        roomRepo.save(room);
+        return "redirect:/";
+    }
+
+    @PreAuthorize("hasAuthority('CLEANER')")
     @GetMapping("/cleaned")
     public String cleaned(@RequestParam("id") String roomId) {
         Room room = roomRepo.findById(Long.valueOf(roomId)).get();
 
-        if(!room.isClean_pend())
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!room.isClean_pend() || userRepo.findByUsername(auth.getName()).getId() != room.cleaner.getId())
         {
             return "redirect:/cleaningError";
         }
@@ -156,9 +175,9 @@ public class RoomController {
         cleanup.setPend_date(room.getPend_date());
         cleanup.setClean_date(LocalDateTime.now());
         cleanup.setRoom_id(room.getId());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         cleanup.setUser_id(userRepo.findByUsername(auth.getName()).getId());
 
+        room.setCleaner(null);
         room.setPend_date(null);
         room.setClean_pend(false);
         roomRepo.save(room);

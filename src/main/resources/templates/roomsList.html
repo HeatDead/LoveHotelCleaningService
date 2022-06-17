@@ -15,7 +15,7 @@
 <div class="pageContent">
     <div class="roomList">
         <div class="roomPanel" th:each="room : ${rooms}">
-            <img th:if="${room.clean_pend}" class="cleanImg" th:src="@{/images/icon.png}">
+            <img th:if="${room.cleaner != null}" class="cleanImg" th:src="@{/images/icon.png}">
             <div class="hiddenPanel">
                 <div class="roomNumber">
                     <span th:text="${room.number}"></span>
@@ -34,7 +34,14 @@
                 </div>
 
                 <div th:if="${room.clean_pend}">
-                    <a sec:authorize="hasAuthority('CLEANER')" th:href="@{cleaned(id=${room.id})}">CLEANED</a>
+                    <div th:if="${room.cleaner == null}">
+                        <a sec:authorize="hasAuthority('CLEANER')" th:href="@{reserve(id=${room.id})}">RESERVE</a>
+                    </div>
+                    <div th:unless="${room.cleaner == null}">
+                        <div th:if="${room.cleaner == user}">
+                            <a sec:authorize="hasAuthority('CLEANER')" th:href="@{cleaned(id=${room.id})}">CLEANED</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
