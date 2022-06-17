@@ -186,7 +186,7 @@ img.cleanImg{
 .adminPanel{
     background: white;
     width: 80%;
-    height: 50rem;
+    height: 40rem;
     border-radius: 15px;
     margin: auto;
     margin-top: 2rem;
@@ -199,7 +199,7 @@ img.cleanImg{
     position: fixed;
     background-color: #A91079;
     width: 15rem;
-    height: 50rem;
+    height: 40rem;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
 }
