@@ -5,9 +5,12 @@ import com.example.lovehotelcleaningservice.repos.CleanupRepo;
 import com.example.lovehotelcleaningservice.repos.RoomRepo;
 import com.example.lovehotelcleaningservice.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class RoomController {
@@ -25,6 +30,24 @@ public class RoomController {
     private UserRepo userRepo;
     @Autowired
     private CleanupRepo cleanupRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void checkUsers() {
+        if(userRepo.findAll().size() == 0)
+        {
+            User user = new User();
+            user.setUsername("admin");
+            user.setPassword(passwordEncoder.encode("admin"));
+            Set<Role> rls = new HashSet<>();
+            rls.add(Role.ADMIN);
+            user.setRoles(rls);
+            user.setActive(true);
+            userRepo.save(user);
+        }
+    }
 
     @GetMapping("/")
     public String roomList(Model model) {
