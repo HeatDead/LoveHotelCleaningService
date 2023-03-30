@@ -9,10 +9,10 @@ services:
       - postgres_db
     links:
       - postgres_db:database
+    env_file:
+      .env
   postgres_db:
     image: "postgres:14.4"
     restart: always
-    environment:
-      POSTGRES_DB: cleaning_service
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+    env_file:
+      .env
